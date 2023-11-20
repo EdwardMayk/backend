@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS periods (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    periodo VARCHAR(255) NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    activo BOOLEAN NOT NULL
+);
