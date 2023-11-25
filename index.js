@@ -15,7 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configuración de las rutas
 app.use('/api', routes);
+console.log('Routes configured');
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
+    //routes
+    console.log('Press Ctrl+C to quit.');
 });
