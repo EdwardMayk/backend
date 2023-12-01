@@ -7,6 +7,12 @@ import documentosRoutes from '../routes/documentos.routes.js';
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    res.json({
+        message: 'Welcome to my application.',
+    });
+}
+);
 router.use('/auth', authRoutes);
 router.use('/periods', periodsRoutes);
 router.use('/areas', areasRoutes)
