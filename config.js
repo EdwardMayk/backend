@@ -1,4 +1,4 @@
-export const PORT = process.env.PORT || 3000;
+export const PORT = process.env.PORT || 3001;
 
 // Path: database.js
 export const DB_HOST = process.env.DB_HOST || '127.0.0.1';
