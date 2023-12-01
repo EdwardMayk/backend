@@ -3,9 +3,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import routes from './src/routes.js';
 import { pool } from './src/database/database.js';
+import { PORT } from './config.js';
 
 const app = express();
-const port = 3000;
+const port = PORT;
 
 // Configuración de CORS
 app.use(cors());
