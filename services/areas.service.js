@@ -4,7 +4,7 @@ import { sequelize } from '../sequelize/sequelize.js';
 
 class AreaService {
     constructor() {
-        this.Area = sequelize.define('area', {
+        this.Area = sequelize.define('areas', {
             id_area: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
