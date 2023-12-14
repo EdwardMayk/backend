@@ -11,17 +11,6 @@ const __dirname = new URL('.', import.meta.url).pathname;
 const router = express.Router();
 const documentoService = new DocumentoService();
 
-// Configuración de multer para manejar la carga de archivos
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const uploadPath = path.join(__dirname, '../files'); // Ajusta la ruta según tu estructura de carpetas
-        cb(null, uploadPath);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + file.originalname);
-    },
-});
 
 const upload = multer({ storage: storage });
 // Ruta para crear un nuevo documento
@@ -39,7 +28,6 @@ router.post('/', upload.single('archivoDocumento'), async (req, res) => {
 
         // Crear nuevo documento en la base de datos
         const nuevoDocumento = await documentoService.crearDocumento({
-            archivoDocumento: req.file,
             numeroDocumento,
             numeroFolio,
             personaDirigido,

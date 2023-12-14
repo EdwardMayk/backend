@@ -5,22 +5,6 @@ import multer from 'multer';
 import path from 'path';
 import { URL } from 'url';
 
-const __filename = new URL('', import.meta.url).pathname;
-const __dirname = new URL('.', import.meta.url).pathname;
-// Configuración de multer para manejar la carga de archivos
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const uploadPath = path.join(__dirname, '../files'); // Ajusta la ruta según tu estructura de carpetas
-        cb(null, uploadPath);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-    },
-});
-
-const upload = multer({ storage: storage });
-
 class DocumentoService {
     constructor() {
         this.Documento = sequelize.define('Documento', {
@@ -193,7 +177,6 @@ class DocumentoService {
         try {
             const { numeroDocumento, numeroFolio, personaDirigido, ubicacion, descripcion, publico, activo, perdido, uuidUsuario, uuidArchivador } = req.body;
 
-            // Obtener datos del usuario y archivador
             const usuario = await this.Usuario.findOne({ where: { uuid_usuario: uuidUsuario } });
             const archivador = await this.Archivador.findOne({ where: { uuid_archivador: uuidArchivador } });
 
@@ -201,31 +184,22 @@ class DocumentoService {
                 throw new Error('Usuario o archivador no encontrado');
             }
 
-            // Utilizar multer para manejar la carga de archivos
-            upload.single('archivoDocumento')(req, res, async (err) => {
-                if (err) {
-                    throw new Error('Error al subir el archivo');
-                }
-
-                // Guardar la ruta del archivo en la base de datos
-                const nuevoDocumento = await this.Documento.create({
-                    uuid_documento: uuidv4(),
-                    archivo_documento: req.file.path, // Utilizar la ruta proporcionada por multer
-                    numero_documento: numeroDocumento,
-                    numero_folio: numeroFolio,
-                    persona_dirigido: personaDirigido,
-                    ubicacion,
-                    descripcion,
-                    publico,
-                    activo,
-                    perdido,
-                    fecha_creacion: new Date(),
-                    id_usuario_creador: usuario.id_usuario,
-                    id_archivador: archivador.id_archivador,
-                });
-
-                return nuevoDocumento;
+            const nuevoDocumento = await this.Documento.create({
+                uuid_documento: uuidv4(),
+                numero_documento: numeroDocumento,
+                numero_folio: numeroFolio,
+                persona_dirigido: personaDirigido,
+                ubicacion,
+                descripcion,
+                publico,
+                activo,
+                perdido,
+                fecha_creacion: new Date(),
+                id_usuario_creador: usuario.id_usuario,
+                id_archivador: archivador.id_archivador,
             });
+
+            return nuevoDocumento;
         } catch (error) {
             console.error('Error al crear documento:', error);
             throw error;
