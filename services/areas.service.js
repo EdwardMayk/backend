@@ -4,7 +4,7 @@ import { sequelize } from '../sequelize/sequelize.js';
 
 class AreaService {
     constructor() {
-        this.Area = sequelize.define('Area', {
+        this.Area = sequelize.define('area', {
             id_area: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -68,7 +68,6 @@ class AreaService {
 
     async crearArea(nombreArea, descripcion, publico, uuidPeriodo) {
         try {
-            // Buscar el periodo por su uuid
             const periodo = await this.Periodo.findOne({ where: { uuid_periodo: uuidPeriodo } });
 
             if (!periodo) {
