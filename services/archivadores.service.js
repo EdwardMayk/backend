@@ -46,7 +46,7 @@ class ArchivadorService {
                 allowNull: false,
             },
         });
-        this.Area = sequelize.define('Area', {
+        this.Area = sequelize.define('areas', {
             id_area: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
