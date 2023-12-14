@@ -1,18 +1,10 @@
 import express from 'express';
-import DocumentoService from '../services/documentos.service.js';
-import multer from 'multer';
-import path from 'path';
 
-import { URL } from 'url';
-
-const __filename = new URL('', import.meta.url).pathname;
-const __dirname = new URL('.', import.meta.url).pathname;
 
 const router = express.Router();
-const documentoService = new DocumentoService();
 
 
-const upload = multer({ storage: storage });
+
 // Ruta para crear un nuevo documento
 router.post('/', upload.single('archivoDocumento'), async (req, res) => {
     try {
