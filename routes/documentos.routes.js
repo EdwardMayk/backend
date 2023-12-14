@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // Ruta para crear un nuevo documento
-router.post('/', upload.single('archivoDocumento'), async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { numeroDocumento, numeroFolio, personaDirigido, ubicacion, descripcion, publico, activo, perdido, uuidUsuario, uuidArchivador } = req.body;
 
